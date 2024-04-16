@@ -1,0 +1,101 @@
+<div class='demo-app'>
+
+  <div class='demo-app-sidebar'>
+    <div class='demo-app-sidebar-section'>
+      <h2>Les Equipes</h2>
+      <img (click)="OpenModal()" src="assets/icone/user.png" alt="tsy hita" srcset="">
+      <!-- <ul>
+        <li>Select dates and you will be prompted to create a new event</li>
+        <li>Drag, drop, and resize events</li>
+        <li>Click an event to delete it</li>
+      </ul> -->
+    </div>
+    <hr>
+    <div class="user">
+      <div *ngFor="let item of users" class="userItems">
+        <img src="assets/User/user1.png" alt="user">
+        <div>
+          <h3> {{item.nom}} </h3>
+        </div>
+        <span (click)="removeUser(item.id)" class="close">&times;</span>
+      </div>
+    </div>
+    <!-- <div class='demo-app-sidebar-section'>
+      <label>
+        <input
+          type='checkbox'
+          [checked]='calendarVisible'
+          (change)='handleCalendarToggle()'
+        />
+        toggle whole calendar
+      </label>
+    </div>
+    <div class='demo-app-sidebar-section'>
+      <label>
+        <input
+          type='checkbox'
+          [checked]='calendarOptions.weekends'
+          (change)='handleWeekendsToggle()'
+        />
+        toggle weekends
+      </label>
+    </div>
+    <div class='demo-app-sidebar-section'>
+      <h2>All Events ({{currentEvents.length}})</h2>
+      <ul>
+        <li *ngFor='let event of currentEvents'>
+          <b>{{event.startStr}}</b>
+          <i>{{event.title}}</i>
+        </li>
+      </ul>
+    </div> -->
+  </div>
+
+  <div class='demo-app-main'>
+    <full-calendar *ngIf='calendarVisible' [options]='calendarOptions'>
+      <ng-template #eventContent let-arg>
+        <b>{{ arg.timeText }}</b>
+        <i [title]="'Votre texte statique ici ' ">{{ arg.event.title }}</i>
+      </ng-template>
+    </full-calendar>
+  </div>
+</div>
+
+<!-- The Modal -->
+<div *ngIf="showModal" class="modal">
+  <div class="container">
+    <h2>Contactez-nous</h2>
+    <span (click)="closeModal()" class="close">&times;</span>
+    <form action="#" method="post">
+      <label for="name">Nom et Prenom </label>
+      <input type="text" id="name" name="name" [(ngModel)]="user.nom" placeholder="Votre nom.." required>
+
+      <label for="email">Image</label>
+      <input type="file" id="email" name="email" [(ngModel)]="user.image" placeholder="Votre Image.." required>
+
+      <input type="submit" (click)="addUser()" value="Envoyer">
+    </form>
+  </div>
+</div>
+
+<div *ngIf="showModalCalandar" class="modal">
+  <div class="container">
+    <span (click)="closeModalCalandar()" class="close">&times;</span>
+    <form action="#" method="post">
+      <label for="name">Titre Mission </label>
+      <input type="text" id="name" name="titre" [(ngModel)]="tache.title" placeholder="Votre nom.." required>
+
+      <label for="subject">User</label>
+      <select id="subject" name="user" [(ngModel)]="tache.user">
+          <option *ngFor="let item of users" value="{{ item.nom }}">{{ item.nom }}</option>
+      </select>
+      
+      <label for="message">Description</label>
+      <textarea id="message" name="description" placeholder="Votre message.." [(ngModel)]="tache.description" style="height:150px" required></textarea>
+
+      <input (click)="saveTache()" type="submit"  value="Envoyer">
+    </form>
+  </div>
+</div>
+
+<app-user></app-user>
