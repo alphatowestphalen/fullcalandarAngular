@@ -55,7 +55,7 @@
     <full-calendar *ngIf='calendarVisible' [options]='calendarOptions'>
       <ng-template #eventContent let-arg>
         <b>{{ arg.timeText }}</b>
-        <i [title]="'Votre texte statique ici ' ">{{ arg.event.title }}</i>
+        <i [title]="'Alice Smith '">{{ arg.event.title }}</i>
       </ng-template>
     </full-calendar>
   </div>
@@ -87,13 +87,17 @@
 
       <label for="subject">User</label>
       <select id="subject" name="user" [(ngModel)]="tache.user">
-          <option *ngFor="let item of users" value="{{ item.nom }}">{{ item.nom }}</option>
+        <option *ngFor="let item of users" value="{{ item.nom }}">{{ item.nom }}</option>
       </select>
-      
-      <label for="message">Description</label>
-      <textarea id="message" name="description" placeholder="Votre message.." [(ngModel)]="tache.description" style="height:150px" required></textarea>
 
-      <input (click)="saveTache()" type="submit"  value="Envoyer">
+      <label for="event-color">Couleur :</label>
+      <input type="color" name="color" [(ngModel)]="tache.color" required>
+
+      <label for="message">Description</label>
+      <textarea id="message" name="description" placeholder="Votre message.." [(ngModel)]="tache.description"
+        style="height:150px" required></textarea>
+
+      <input (click)="saveTache()" type="submit" value="Envoyer">
     </form>
   </div>
 </div>

@@ -20,6 +20,23 @@ import { Tache } from './Interface/tache'
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  events: any = [
+    {
+      title: 'All-day event',
+      date: '2024-04-01',
+      color: 'yellow',
+    },
+    {
+      title: 'All-day event',
+      date: '2024-04-01',
+      color: 'bleu',
+    },
+    {
+      title: 'All-day event',
+      date: '2024-04-02',
+      color: 'red',
+    },
+  ];
   users: any[] = [];
   taches: any[] = [];
   user: User = {} as User;
@@ -36,8 +53,8 @@ export class AppComponent implements OnInit {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
     },
-    
     initialView: 'dayGridMonth',
+    events: this.events,
     initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
     weekends: true,
     editable: true,
@@ -48,7 +65,6 @@ export class AppComponent implements OnInit {
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
-    
   }
   currentEvents: EventApi[] = []
 
@@ -61,11 +77,6 @@ export class AppComponent implements OnInit {
   handleEventMouseEnter(info: any) {
     console.log(info);
   }
-  
-
-  handleCalendarToggle() {
-    this.calendarVisible = !this.calendarVisible
-  }
 
   handleWeekendsToggle() {
     const { calendarOptions } = this
@@ -76,21 +87,7 @@ export class AppComponent implements OnInit {
     this.tache = {} as Tache;
     this.showModalCalandar = true;
     this.dateSelectArg = selectInfo;
-//     const title = this.tache.title;  
-// console.log(title)
 
-//     const calendarApi = selectInfo.view.calendar
-//     calendarApi.unselect() 
-//     if (title) {
-// console.log(title)
-//       calendarApi.addEvent({
-//         id: createEventId(),
-//         title,
-//         start: selectInfo.startStr,
-//         end: selectInfo.endStr,
-//         allDay: selectInfo.allDay,
-//       })
-//     }
   }
 
   handleEventClick(clickInfo: EventClickArg) {
@@ -114,13 +111,6 @@ export class AppComponent implements OnInit {
   handleEventDrop(arg: any) {
     console.log('Événement déplacé :', arg.event)
   }
-
-  // saveTache() {
-    
-  //   this.handleDateSelect(selectInfo: DateSelectArg);
-  //   console.log(this.taches);
-  //   this.showModalCalandar = false;
-  // }
   OpenModal() {
     this.showModal = true;
     this.user = {} as User;
@@ -145,6 +135,7 @@ export class AppComponent implements OnInit {
   }
 
   saveTache() {
+    console.log(this.tache);    
     if(!this.dateSelectArg ) return 
     this.taches.push(this.tache);
     const calendarApi = this.dateSelectArg.view.calendar
@@ -152,9 +143,9 @@ export class AppComponent implements OnInit {
       calendarApi.addEvent({
         id: createEventId(),
         title: this.tache.title,
-        start: this.dateSelectArg.startStr,
+        color: this.tache.color,
+        start: this.dateSelectArg.startStr ,
         end: this.dateSelectArg.endStr,
-        allDay: this.dateSelectArg.allDay,
       })
         this.showModalCalandar = false;
         this.dateSelectArg = null;

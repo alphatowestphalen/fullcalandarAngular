@@ -3,4 +3,5 @@ export interface Tache {
     title: string;
     user: string;
     description: string;
+    color: string;
 }

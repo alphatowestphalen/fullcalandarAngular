@@ -14,7 +14,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     FullCalendarModule,
-    FormsModule
+    FormsModule,
+    FullCalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
