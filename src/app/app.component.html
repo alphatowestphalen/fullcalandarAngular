@@ -55,7 +55,16 @@
     <full-calendar *ngIf='calendarVisible' [options]='calendarOptions'>
       <ng-template #eventContent let-arg>
         <b>{{ arg.timeText }}</b>
-        <i [title]="'Alice Smith '">{{ arg.event.title }}</i>
+        <i [id]="arg.event.id">{{ arg.event.title }}</i>
+          <div *ngIf="currentSelected === +arg.event.id" class="desc">
+          <div class="descItems">
+            <h5>{{ desc }}</h5>
+            <div class="userItemsd">
+              <img src="assets/User/user1.png" alt="user">
+              <p> {{nameUser}} </p>
+            </div>
+          </div>
+        </div>
       </ng-template>
     </full-calendar>
   </div>
@@ -95,8 +104,7 @@
 
       <label for="message">Description</label>
       <textarea id="message" name="description" placeholder="Votre message.." [(ngModel)]="tache.description"
-        style="height:150px" required></textarea>
-
+        style="height:100px" required></textarea>
       <input (click)="saveTache()" type="submit" value="Envoyer">
     </form>
   </div>

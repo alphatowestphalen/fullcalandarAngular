@@ -163,4 +163,26 @@ input[type="submit"] {
 input[type="submit"]:hover {
   background-color: #45a049;
 }
+.desc {
+  background-color: #f8f8f8;
+  position: absolute;
+  margin-top: 2px;
+  padding: 2px;
+  border-radius: 0 12px 12px 12px;
+  color: #222020; 
+}
+
+
+.desc .descItems img {
+  width: 36px;
+  height: 36px;
+  border-radius: 100%;
+}
+.userItemsd {
+  display: flex;
+    color: #222020;
+    gap: 13px;
+    margin: 38px 13px;
+    align-items: center;
+}
 

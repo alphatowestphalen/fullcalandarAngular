@@ -5,6 +5,7 @@ import {
   EventClickArg,
   EventApi,
 } from '@fullcalendar/core'
+
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -42,10 +43,14 @@ export class AppComponent implements OnInit {
   user: User = {} as User;
   tache: Tache = {} as Tache;
   showModal: boolean = false;
-   dateSelectArg : DateSelectArg | null = null;
+  showDesc: boolean = true;
+  currentSelected: number | null = null;
+  dateSelectArg : DateSelectArg | null = null;
   calendarVisible = true;
   showModalCalandar = false;
   strnig: string = 'totot';
+  desc: string = ''; 
+  nameUser: string = '';
   calendarOptions: CalendarOptions = {
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     headerToolbar: {
@@ -65,6 +70,16 @@ export class AppComponent implements OnInit {
     select: this.handleDateSelect.bind(this),
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
+    eventMouseEnter: this.handleEventMouseEnter.bind(this),
+    eventMouseLeave: this.handleEventMouseLeave.bind(this),
+    // eventDidMount: function(info) {
+    //   var tooltip = new Tooltip(info.el, {
+    //     title: info.event.extendedProps.description,
+    //     placement: 'top',
+    //     trigger: 'hover',
+    //     container: 'body'
+    //   });
+    // },
   }
   currentEvents: EventApi[] = []
 
@@ -73,9 +88,23 @@ export class AppComponent implements OnInit {
     this.users = users;
     console.log(this.users);    
   }
-
-  handleEventMouseEnter(info: any) {
+  handleEventMouseLeave(info:any): void {
     console.log(info);
+    this.showDesc = false;
+    this.currentSelected = null;    
+  }
+  handleEventMouseEnter(info: any) {
+    const { el , event } = info  
+    const id = event?.id 
+    const elem = this.taches.find((t) => +t.id === +id) 
+    this.desc = elem?.description;
+    this.nameUser = elem?.user;
+    if(elem){
+      this.showDesc = true;
+      this.currentSelected = +id;
+    }
+
+
   }
 
   handleWeekendsToggle() {
@@ -90,8 +119,10 @@ export class AppComponent implements OnInit {
 
   }
 
+  
+
   handleEventClick(clickInfo: EventClickArg) {
-    console.log('Événement cliqué :', clickInfo.event.title)
+    console.log(clickInfo.event.title);
     if (
       confirm(
         `Are you sure you want to delete the event '${clickInfo.event.title}'`
@@ -137,15 +168,19 @@ export class AppComponent implements OnInit {
   saveTache() {
     console.log(this.tache);    
     if(!this.dateSelectArg ) return 
-    this.taches.push(this.tache);
+
+    const id = createEventId()
+    this.taches.push({...this.tache, id });
+  
     const calendarApi = this.dateSelectArg.view.calendar
     calendarApi.unselect() // clear date selection
       calendarApi.addEvent({
-        id: createEventId(),
+        id, 
         title: this.tache.title,
         color: this.tache.color,
         start: this.dateSelectArg.startStr ,
         end: this.dateSelectArg.endStr,
+        description: this.tache.description
       })
         this.showModalCalandar = false;
         this.dateSelectArg = null;
