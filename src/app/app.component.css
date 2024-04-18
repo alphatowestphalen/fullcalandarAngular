@@ -170,6 +170,7 @@ input[type="submit"]:hover {
   padding: 2px;
   border-radius: 0 12px 12px 12px;
   color: #222020; 
+  max-width: 303px;
 }
 
 
@@ -177,6 +178,10 @@ input[type="submit"]:hover {
   width: 36px;
   height: 36px;
   border-radius: 100%;
+}
+
+.desc .descItems p {
+  text-wrap: wrap;
 }
 .userItemsd {
   display: flex;

@@ -50,15 +50,16 @@
       </ul>
     </div> -->
   </div>
-
   <div class='demo-app-main'>
     <full-calendar *ngIf='calendarVisible' [options]='calendarOptions'>
       <ng-template #eventContent let-arg>
         <b>{{ arg.timeText }}</b>
         <i [id]="arg.event.id">{{ arg.event.title }}</i>
-          <div *ngIf="currentSelected === +arg.event.id" class="desc">
+          <!-- <div *ngIf="true" class="desc"> -->
+            <div *ngIf="currentSelected === +arg.event.id" class="desc">
           <div class="descItems">
-            <h5>{{ desc }}</h5>
+            <!-- <h5>{{ desc }}</h5> -->
+            <p>{{ desc }}</p>
             <div class="userItemsd">
               <img src="assets/User/user1.png" alt="user">
               <p> {{nameUser}} </p>
